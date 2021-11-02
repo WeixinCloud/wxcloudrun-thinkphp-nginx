@@ -1,17 +1,128 @@
 <?php
+
 namespace app\controller;
 
 use app\BaseController;
+use Exception;
+use think\Request;
+use app\model\User;
+use think\response\Json;
 
 class Index extends BaseController
 {
-    public function index()
+    /**
+     * 根据主键ID查询用户数据
+     *
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\DataNotFoundException
+     */
+    public function queryUserById($id): Json
     {
-	return '<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} a{color:#2E5CD5;cursor: pointer;text-decoration: none} a:hover{text-decoration:underline; } body{ background: #fff; font-family: "Century Gothic","Microsoft yahei"; color: #333;font-size:18px;} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.6em; font-size: 42px }</style><div style="padding: 24px 48px;"> <h1>:) </h1><p> ThinkPHP V' . \think\facade\App::version() . '<br/><span style="font-size:30px;">微信云托管 thinkphp 示例</span></p><span style="font-size:25px;"></span></div><script type="text/javascript" src="https://tajs.qq.com/stats?sId=64890268" charset="UTF-8"></script><script type="text/javascript" src="https://e.topthink.com/Public/static/client.js"></script><think id="ee9b1aa918103c4fc"></think>';
+        try {
+            $user = (new User)->find($id);
+            $res = [
+                "code" => 0,
+                "data" => ($user->getData()),
+                "message" => ""
+            ];
+            return json($res);
+        } catch (Exception $e) {
+            $res = [
+                "code" => -1,
+                "data" => [],
+                "message" => ("查询用户异常" . $e->getMessage())
+            ];
+            return json($res);
+        }
     }
 
-    public function hello($name = 'ThinkPHP6')
+    /**
+     * 增加用户
+     * @param Request $request
+     * @return Json
+     */
+    public function addUser(Request $request): Json
     {
-        return 'hello,' . $name;
+        try {
+            $user = new User;
+            $user->save([
+                "name" => $request->param("name"),
+                "email" => $request->param("email"),
+                "phone" => $request->param("phone"),
+                "description" => $request->param("description"),
+            ]);
+            $res = [
+                "code" => 0,
+                "data" => [],
+                "message" => "插入成功"
+            ];
+            return json($res);
+
+        } catch (Exception $e) {
+            $res = [
+                "code" => -1,
+                "data" => [],
+                "message" => ("新增用户异常" . $e->getMessage())
+            ];
+            return json($res);
+        }
+    }
+
+    /**
+     * 根据ID删除用户
+     * @param $id
+     * @return Json
+     */
+    public function deleteUserById($id): Json
+    {
+        try {
+            User::destroy($id);
+            $res = [
+                "code" => 0,
+                "data" => [],
+                "message" => "删除用户成功"
+            ];
+            return json($res);
+        } catch (Exception $e) {
+            $res = [
+                "code" => -1,
+                "data" => [],
+                "message" => ("删除用户异常" . $e->getMessage())
+            ];
+            return json($res);
+        }
+    }
+
+    /**
+     * 根据ID更新用户数据
+     * @param Request $request
+     */
+    public function updateUserById(Request $request)
+    {
+        try {
+            User::update([
+                'name' => $request->param("name"),
+                'email' => $request->param('email'),
+                'phone' => $request->param('phone'),
+                'description' => $request->param('description')
+            ],
+                ['id' => $request->param('id')]
+            );
+
+            $res = [
+                "code" => 0,
+                "data" => [],
+                "message" => ""
+            ];
+            return json($res);
+        } catch (Exception $e) {
+            $res = [
+                "code" => -1,
+                "data" => [],
+                "message" => ("更新用户异常" . $e->getMessage())
+            ];
+            return json($res);
+        }
     }
 }

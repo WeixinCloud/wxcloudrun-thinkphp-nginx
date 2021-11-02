@@ -10,8 +10,14 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP6!';
-});
+// 查询用户
+Route::get('user/:id', 'index/queryUserById');
 
-Route::get('hello/:name', 'index/hello');
+// 新增用户
+Route::post('user', 'index/addUser');
+
+// 删除用户
+Route::delete('user/:id', 'index/deleteUserById');
+
+// 修改用户
+Route::put('user', 'index/updateUserById');
