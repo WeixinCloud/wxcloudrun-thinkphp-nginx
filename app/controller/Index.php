@@ -24,14 +24,14 @@ class Index extends BaseController
             $res = [
                 "code" => 0,
                 "data" => ($user->getData()),
-                "message" => ""
+                "errorMsg" => ""
             ];
             return json($res);
         } catch (Exception $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
-                "message" => ("查询用户异常" . $e->getMessage())
+                "errorMsg" => ("查询用户异常" . $e->getMessage())
             ];
             return json($res);
         }
@@ -55,7 +55,7 @@ class Index extends BaseController
             $res = [
                 "code" => 0,
                 "data" => [],
-                "message" => "插入成功"
+                "errorMsg" => "插入成功"
             ];
             return json($res);
 
@@ -63,7 +63,7 @@ class Index extends BaseController
             $res = [
                 "code" => -1,
                 "data" => [],
-                "message" => ("新增用户异常" . $e->getMessage())
+                "errorMsg" => ("新增用户异常" . $e->getMessage())
             ];
             return json($res);
         }
@@ -81,14 +81,14 @@ class Index extends BaseController
             $res = [
                 "code" => 0,
                 "data" => [],
-                "message" => "删除用户成功"
+                "errorMsg" => "删除用户成功"
             ];
             return json($res);
         } catch (Exception $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
-                "message" => ("删除用户异常" . $e->getMessage())
+                "errorMsg" => ("删除用户异常" . $e->getMessage())
             ];
             return json($res);
         }
@@ -113,14 +113,14 @@ class Index extends BaseController
             $res = [
                 "code" => 0,
                 "data" => [],
-                "message" => ""
+                "errorMsg" => ""
             ];
             return json($res);
         } catch (Exception $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
-                "message" => ("更新用户异常" . $e->getMessage())
+                "errorMsg" => ("更新用户异常" . $e->getMessage())
             ];
             return json($res);
         }
