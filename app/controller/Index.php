@@ -3,7 +3,11 @@
 namespace app\controller;
 
 use app\BaseController;
+use Error;
 use Exception;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Request;
 use app\model\User;
 use think\response\Json;
@@ -12,10 +16,6 @@ class Index extends BaseController
 {
     /**
      * 根据主键ID查询用户数据
-     *
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\DataNotFoundException
      */
     public function queryUserById($id): Json
     {
@@ -27,7 +27,7 @@ class Index extends BaseController
                 "errorMsg" => ""
             ];
             return json($res);
-        } catch (Exception $e) {
+        } catch (Error $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
@@ -63,7 +63,7 @@ class Index extends BaseController
             $res = [
                 "code" => -1,
                 "data" => [],
-                "errorMsg" => ("新增用户异常" . $e->getMessage())
+                "errorMsg" => ("新增用户异常" . $e->getMessage()),
             ];
             return json($res);
         }
@@ -105,6 +105,7 @@ class Index extends BaseController
                 'name' => $request->param("name"),
                 'email' => $request->param('email'),
                 'phone' => $request->param('phone'),
+                'age' => $request->param('age'),
                 'description' => $request->param('description')
             ],
                 ['id' => $request->param('id')]

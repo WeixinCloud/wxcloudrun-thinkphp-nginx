@@ -24,13 +24,13 @@ return [
             // 数据库类型
             'type' => 'mysql',
             // 服务器地址
-            'hostname' => preg_split('/:/', env('MYSQL_ADDRESS'))[0],
+            'hostname' => preg_split('/:/',getenv('MYSQL_ADDRESS'))[0],
             // 服务器端口
-            'hostport' => preg_split('/:/', env('MYSQL_ADDRESS'))[1],
+            'hostport' =>  preg_split('/:/',getenv('MYSQL_ADDRESS'))[1],
             // 用户名
-            'username' => env('MYSQL_USERNAME'),
+            'username' => getenv('MYSQL_USERNAME'),
             // 密码
-            'password' => env('MYSQL_PASSWORD'),
+            'password' => getenv('MYSQL_PASSWORD'),
             // 数据库名
             'database' => 'thinkphp_demo',
             // 数据库连接参数
