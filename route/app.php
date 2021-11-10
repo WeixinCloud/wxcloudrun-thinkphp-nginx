@@ -10,14 +10,17 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-// 查询用户
-Route::get('user/:id', 'index/queryUserById');
+// 通过id查询todo
+Route::get('api/todos/:id', 'index/queryToDoById');
 
-// 新增用户
-Route::post('user', 'index/addUser');
+// 查询todo list
+Route::get('api/todos', 'index/getToDoList');
 
-// 删除用户
-Route::delete('user/:id', 'index/deleteUserById');
+// 新增tod
+Route::post('api/todos', 'index/addToDo');
 
-// 修改用户
-Route::put('user', 'index/updateUserById');
+// 通过id删除todo
+Route::delete('api/todos/:id', 'index/deleteToDoById');
+
+// 修改todo
+Route::put('api/todos', 'index/updateToDo');

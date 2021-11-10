@@ -9,48 +9,70 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Request;
-use app\model\User;
+use app\model\ToDoList;
 use think\response\Json;
 
 class Index extends BaseController
 {
     /**
-     * 根据主键ID查询用户数据
+     * 获取todo list
      */
-    public function queryUserById($id): Json
+    public function getToDoList(Request $request): Json
     {
         try {
-            $user = (new User)->find($id);
+            $toDoList = (new ToDoList)->select();
             $res = [
                 "code" => 0,
-                "data" => ($user->getData()),
-                "errorMsg" => ""
+                "data" => ($toDoList),
+                "errorMsg" => "查询成功"
             ];
             return json($res);
         } catch (Error $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
-                "errorMsg" => ("查询用户异常" . $e->getMessage())
+                "errorMsg" => ("查询todo list异常" . $e->getMessage())
+            ];
+            return json($res);
+        }
+    }
+
+
+    /**
+     * 根据主键ID查询todo数据
+     */
+    public function queryToDoById($id): Json
+    {
+        try {
+            $toDoList = (new ToDoList)->find($id);
+            $res = [
+                "code" => 0,
+                "data" => ($toDoList->getData()),
+                "errorMsg" => "查询成功"
+            ];
+            return json($res);
+        } catch (Error $e) {
+            $res = [
+                "code" => -1,
+                "data" => [],
+                "errorMsg" => ("查询todo异常" . $e->getMessage())
             ];
             return json($res);
         }
     }
 
     /**
-     * 增加用户
+     * 增加todo
      * @param Request $request
      * @return Json
      */
-    public function addUser(Request $request): Json
+    public function addToDo(Request $request): Json
     {
         try {
-            $user = new User;
-            $user->save([
-                "name" => $request->param("name"),
-                "email" => $request->param("email"),
-                "phone" => $request->param("phone"),
-                "description" => $request->param("description"),
+            $toDoList = new ToDoList;
+            $toDoList->save([
+                "title" => $request->param("title"),
+                "status" => $request->param("status"),
             ]);
             $res = [
                 "code" => 0,
@@ -63,52 +85,58 @@ class Index extends BaseController
             $res = [
                 "code" => -1,
                 "data" => [],
-                "errorMsg" => ("新增用户异常" . $e->getMessage()),
+                "errorMsg" => ("新增todo异常" . $e->getMessage()),
             ];
             return json($res);
         }
     }
 
     /**
-     * 根据ID删除用户
+     * 根据ID删除todo
      * @param $id
      * @return Json
      */
-    public function deleteUserById($id): Json
+    public function deleteToDoById($id): Json
     {
         try {
-            User::destroy($id);
+            ToDoList::destroy($id);
             $res = [
                 "code" => 0,
                 "data" => [],
-                "errorMsg" => "删除用户成功"
+                "errorMsg" => "删除todo成功"
             ];
             return json($res);
         } catch (Exception $e) {
             $res = [
                 "code" => -1,
                 "data" => [],
-                "errorMsg" => ("删除用户异常" . $e->getMessage())
+                "errorMsg" => ("删除todo异常" . $e->getMessage())
             ];
             return json($res);
         }
     }
 
     /**
-     * 根据ID更新用户数据
+     * 根据ID更新todo数据
      * @param Request $request
      */
-    public function updateUserById(Request $request)
+    public function updateToDo(Request $request)
     {
         try {
-            User::update([
-                'name' => $request->param("name"),
-                'email' => $request->param('email'),
-                'phone' => $request->param('phone'),
-                'age' => $request->param('age'),
-                'description' => $request->param('description')
+            $allowField = array();
+            if (null != $request->param("title")) {
+                $allowField[] = "title";
+            }
+            if (null != $request->param("status")) {
+                $allowField[] = "status";
+            }
+
+            ToDoList::update([
+                "title" => $request->param("title"),
+                "status" => $request->param("status"),
             ],
-                ['id' => $request->param('id')]
+                ['id' => $request->param('id')],
+                $allowField,
             );
 
             $res = [
@@ -121,7 +149,7 @@ class Index extends BaseController
             $res = [
                 "code" => -1,
                 "data" => [],
-                "errorMsg" => ("更新用户异常" . $e->getMessage())
+                "errorMsg" => ("更新todo异常" . $e->getMessage())
             ];
             return json($res);
         }
