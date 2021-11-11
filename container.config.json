@@ -11,5 +11,10 @@
 	"policyThreshold": 60,                          // 扩缩容条件：使用率超过60%触发
 	"envParams": {},                                // 环境变量。可以有多个。
 	"customLogs": "stdout",                         // 日志采集路径
-	"initialDelaySeconds": 2                        // 容器启动后延迟多久开始健康检查。默认值2秒。
+	"dataBaseName":"thinkphp_demo",                   // 创建的数据库表的名称
+	"executeSQLs":[
+		"CREATE DATABASE IF NOT EXISTS thinkphp_demo;",
+		"USE thinkphp_demo;",
+		"CREATE TABLE IF NOT EXISTS `todo_list` (`id` int(32) NOT NULL AUTO_INCREMENT, `title` varchar(256) NOT NULL DEFAULT '', `status` varchar(64) NOT NULL DEFAULT '', `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+	]   
 }
