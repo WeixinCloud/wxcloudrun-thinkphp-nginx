@@ -128,9 +128,11 @@ class Index extends BaseController
                 $allowField[] = "status";
             }
 
-            ToDoList::update(["title" => $request->param("title"), "status" => $request->param("status"),],
+            ToDoList::update(
+                ["title" => $request->param("title"), "status" => $request->param("status"),],
                 ['id' => $request->param('id')],
-                $allowField);
+                $allowField
+            );
 
             $res = [
                 "code" => 0,
