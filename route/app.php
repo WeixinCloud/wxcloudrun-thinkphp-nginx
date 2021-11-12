@@ -24,3 +24,6 @@ Route::delete('api/todos/:id', 'index/deleteToDoById');
 
 // 修改todo
 Route::put('api/todos', 'index/updateToDo');
+
+// 主页
+Route::get('/', 'index/index');
