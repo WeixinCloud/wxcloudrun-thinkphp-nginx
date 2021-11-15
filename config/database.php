@@ -32,7 +32,7 @@ return [
             // 密码
             'password' => getenv('MYSQL_PASSWORD'),
             // 数据库名
-            'database' => getenv('MYSQL_DATABASE', 'thinkphp_demo'),
+            'database' => (getenv('MYSQL_DATABASE') == null) ? 'thinkphp_demo' : getenv('MYSQL_DATABASE'),
             // 数据库连接参数
             'params' => [],
             // 数据库编码默认采用utf8
