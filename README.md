@@ -25,28 +25,28 @@
 ## 目录结构
 ~~~
 .
-├── Dockerfile					构建nginx-fpm环境镜像使用（默认）
-├── Dockerfile-Apache			构建apache环境镜像使用（默认）
-├── README.md					README 文件
-├── app							应用目录
-│   ├── controller				控制器目录
-│   ├── model					模型目录
-│   └── view					视图目录
-├── conf						配置文件
-│   ├── apache.conf				apache配置
-│   └── nginx.conf				nginx配置
-├── config						thinkphp配置				
+├── Dockerfile                  构建nginx-fpm环境镜像使用（默认）
+├── Dockerfile-Apache           构建apache环境镜像使用（默认）
+├── README.md                   README 文件
+├── app                         应用目录
+│   ├── controller              控制器目录
+│   ├── model                   模型目录
+│   └── view                    视图目录
+├── conf                        配置文件
+│   ├── apache.conf             apache配置
+│   └── nginx.conf              nginx配置
+├── config                      thinkphp配置
 ├── container.config.json       微信云托管流水线配置
 ├── public                      WEB目录（对外访问目录）
 │   ├── favicon.ico             图标
 │   ├── index.php               入口文件       
 │   └── router.php              快速测试文件 
-├── route						路由文件			
-│   └── app.php					定义应用路由
-├── run.sh						nginx、fpm启动
-├── runtime						应用的运行时目录（可写，可定制）
-├── think						命令行入口文件
-└── vendor						第三方类库目录
+├── route                       路由文件			
+│   └── app.php                 定义应用路由
+├── run.sh                      nginx、fpm启动
+├── runtime                     应用的运行时目录（可写，可定制）
+├── think                       命令行入口文件
+└── vendor                      第三方类库目录
 ~~~
 
 
@@ -65,21 +65,21 @@ curl -X GET  http://{ip}:{port}/api/todos
 * 响应示例：
 ```
 {
-	"code": 0,
-	"errorMsg": "",
-	"data": [{
-		"id": 1,
-		"title": "工作1",
-		"status": "准备中",
-		"create_time": "2021-11-09T08:45:40Z",
-		"update_time": "2021-11-09T08:45:40Z"
-	}, {
-		"id": 2,
-		"title": "工作2",
-		"status": "已开始",
-		"create_time": "2021-11-09T08:46:11Z",
-		"update_time": "2021-11-09T08:46:11Z"
-	}]
+  "code": 0,
+  "errorMsg": "",
+  "data": [{
+    "id": 1,
+    "title": "工作1",
+    "status": "准备中",
+    "create_time": "2021-11-09T08:45:40Z",
+    "update_time": "2021-11-09T08:45:40Z"
+  }, {
+    "id": 2,
+    "title": "工作2",
+    "status": "已开始",
+    "create_time": "2021-11-09T08:46:11Z",
+    "update_time": "2021-11-09T08:46:11Z"
+  }]
 }
 ```
 
@@ -97,15 +97,15 @@ curl -X GET  http://{ip}:{port}/api/todos/1
 * 响应示例：
 ```
 {
-	"code": 0,
-	"errorMsg": "",
-	"data": {
-		"id": 1,
-		"title": "工作1",
-		"status": "准备中",
-		"create_time": "2021-11-09T08:45:40Z",
-		"update_time": "2021-11-09T08:45:40Z"
-	}
+  "code": 0,
+  "errorMsg": "",
+  "data": {
+    "id": 1,
+    "title": "工作1",
+    "status": "准备中",
+    "create_time": "2021-11-09T08:45:40Z",
+    "update_time": "2021-11-09T08:45:40Z"
+  }
 }
 ```
 
@@ -121,23 +121,23 @@ curl http://{ip}:{port}/api/todos \
   -X POST \
   -H 'Content-Type: application/json' \
   -d '{  
-      "title":"工作1",
-      "status":"准备中"
+    "title":"工作1",
+    "status":"准备中"
   }'
 ```
 
 * 响应示例：
 ```
 {
-	"code": 0,
-	"errorMsg": "",
-	"data": {
-		"id": 1,
-		"title": "工作1",
-		"status": "准备中",
-		"create_time": "2021-11-09T08:45:40Z",
-		"update_time": "2021-11-09T08:45:40Z"
-	}
+  "code": 0,
+  "errorMsg": "",
+  "data": {
+    "id": 1,
+    "title": "工作1",
+    "status": "准备中",
+    "create_time": "2021-11-09T08:45:40Z",
+    "update_time": "2021-11-09T08:45:40Z"
+  }
 }
 ```
 
@@ -152,16 +152,16 @@ curl http://{ip}:{port}/api/todos \
   -X PUT \
   -H 'Content-Type: application/json' \
   -d '{  
-      "id":1,
-      "status":"已完成"
+    "id":1,
+    "status":"已完成"
   }'
 ```
 
 * 响应示例：
 ```
 {
-	"code": 0,
-	"errorMsg": ""
+  "code": 0,
+  "errorMsg": ""
 }
 ```
 
@@ -181,8 +181,8 @@ curl http://{ip}:{port}/api/todos/1 \
 * 响应示例：
 ```
 {
-	"code": 0,
-	"errorMsg": ""
+  "code": 0,
+  "errorMsg": ""
 }
 ```
 
