@@ -10,16 +10,18 @@ RUN apt-get update \
 # 设定工作目录
 WORKDIR /app
 
-#拷贝源码
-COPY . .
+# 将当前目录下所有文件拷贝到/app
+COPY . /app
 
 # 暴露端口
 EXPOSE 80
 
 # 授权运行脚本
 # 替换nginx配置
+# /app/runtime 权限
 RUN chmod 755 /app/run.sh \
-&& cp /app/conf/nginx.conf /etc/nginx/sites-enabled/default
+&& cp /app/conf/nginx.conf /etc/nginx/sites-enabled/default \
+&& chmod 777 /app/runtime
 
 # 容器启动执行脚本
 CMD ["sh", "run.sh"]

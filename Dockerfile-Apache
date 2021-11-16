@@ -8,13 +8,13 @@ RUN docker-php-ext-install pdo pdo_mysql
 # 设定工作目录
 WORKDIR /app
 
-# 将当前目录下所有文件拷贝到Apache的web目录中
-COPY . .
+# 将当前目录下所有文件拷贝到/app
+COPY . /app
 
 # 替换apache配置文件
 # 软连接rewrite.load,开启rewrite路径重写模式
 # 修改runtime权限
-RUN cp  /app/conf/apache.conf /etc/apache2/sites-enabled/000-default.conf \
+RUN cp /app/conf/apache.conf /etc/apache2/sites-enabled/000-default.conf \
 && ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load \
 && chmod -R 777  /app/runtime
 

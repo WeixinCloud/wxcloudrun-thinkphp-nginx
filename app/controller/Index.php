@@ -17,6 +17,7 @@ use think\Request;
 use app\model\ToDoList;
 use think\response\Html;
 use think\response\Json;
+use think\facade\Log;
 
 class Index
 {
@@ -45,6 +46,7 @@ class Index
                 "data" => ($toDoList),
                 "errorMsg" => "查询成功"
             ];
+            Log::write('getToDoList rsp: '.json_encode($res));
             return json($res);
         } catch (Error $e) {
             $res = [
@@ -52,6 +54,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("查询todo list异常" . $e->getMessage())
             ];
+            Log::write('getToDoList rsp: '.json_encode($res));
             return json($res);
         }
     }
@@ -65,12 +68,13 @@ class Index
     public function queryToDoById($id): Json
     {
         try {
-            $toDoList = (new ToDoList)->find($id);
+            $toDo = (new ToDoList)->find($id);
             $res = [
                 "code" => 0,
-                "data" => ($toDoList->getData()),
+                "data" => ($toDo->getData()),
                 "errorMsg" => "查询成功"
             ];
+            Log::write('queryToDoById rsp: '.json_encode($res));
             return json($res);
         } catch (Error $e) {
             $res = [
@@ -78,6 +82,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("查询todo异常" . $e->getMessage())
             ];
+            Log::write('queryToDoById rsp: '.json_encode($res));
             return json($res);
         }
     }
@@ -97,6 +102,7 @@ class Index
                 "data" => $todo,
                 "errorMsg" => "插入成功"
             ];
+            Log::write('addToDo rsp: '.json_encode($res));
             return json($res);
 
         } catch (Exception $e) {
@@ -105,6 +111,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("新增todo异常" . $e->getMessage()),
             ];
+            Log::write('addToDo rsp: '.json_encode($res));
             return json($res);
         }
     }
@@ -123,6 +130,7 @@ class Index
                 "data" => [],
                 "errorMsg" => "删除todo成功"
             ];
+            Log::write('deleteToDoById rsp: '.json_encode($res));
             return json($res);
         } catch (Exception $e) {
             $res = [
@@ -130,6 +138,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("删除todo异常" . $e->getMessage())
             ];
+            Log::write('deleteToDoById rsp: '.json_encode($res));
             return json($res);
         }
     }
@@ -161,6 +170,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ""
             ];
+            Log::write('updateToDo rsp: '.json_encode($res));
             return json($res);
         } catch (Exception $e) {
             $res = [
@@ -168,6 +178,7 @@ class Index
                 "data" => [],
                 "errorMsg" => ("更新todo异常" . $e->getMessage())
             ];
+            Log::write('updateToDo rsp: '.json_encode($res));
             return json($res);
         }
     }
