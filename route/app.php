@@ -10,20 +10,8 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-// 通过id查询todo
-Route::get('api/todos/:id', 'index/queryToDoById');
+// 获取当前计数
+Route::get('/api/count', 'index/getCount');
 
-// 查询todo list
-Route::get('api/todos', 'index/getToDoList');
-
-// 新增tod
-Route::post('api/todos', 'index/addToDo');
-
-// 通过id删除todo
-Route::delete('api/todos/:id', 'index/deleteToDoById');
-
-// 修改todo
-Route::put('api/todos', 'index/updateToDo');
-
-// 主页
-Route::get('/', 'index/index');
+// 更新计数，自增或者清零
+Route::post('/api/count', 'index/updateCount');

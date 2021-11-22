@@ -13,13 +13,12 @@ namespace app\model;
 
 use think\Model;
 
-// ToDoList 定义数据库model
-class ToDoList extends Model
+// Counters 定义数据库model
+class Counters extends Model
 {
-    protected $table = 'todo_list';
+    protected $table = 'Counters';
     public $id;
-    public $title;
-    public $status;
-    public $create_time;
-    public $update_time;
+    public $count;
+    public $createdAt;
+    public $updateAt;
 }
