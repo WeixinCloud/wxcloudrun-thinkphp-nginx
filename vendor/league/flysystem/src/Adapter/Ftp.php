@@ -2,6 +2,7 @@
 
 namespace League\Flysystem\Adapter;
 
+use ErrorException;
 use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
@@ -129,9 +130,6 @@ class Ftp extends AbstractFtpAdapter
      */
     public function connect()
     {
-        $tries = 3;
-        start_connecting:
-
         if ($this->ssl) {
             $this->connection = @ftp_ssl_connect($this->getHost(), $this->getPort(), $this->getTimeout());
         } else {
@@ -139,10 +137,6 @@ class Ftp extends AbstractFtpAdapter
         }
 
         if ( ! $this->connection) {
-            $tries--;
-
-            if ($tries > 0) goto start_connecting;
-
             throw new ConnectionRuntimeException('Could not connect to host: ' . $this->getHost() . ', port:' . $this->getPort());
         }
 
@@ -160,7 +154,7 @@ class Ftp extends AbstractFtpAdapter
     {
         if ($this->utf8) {
             $response = ftp_raw($this->connection, "OPTS UTF8 ON");
-            if (!in_array(substr($response[0], 0, 3), ['200', '202'])) {
+            if (substr($response[0], 0, 3) !== '200') {
                 throw new ConnectionRuntimeException(
                     'Could not set UTF-8 mode for connection: ' . $this->getHost() . '::' . $this->getPort()
                 );
@@ -400,7 +394,7 @@ class Ftp extends AbstractFtpAdapter
             return ['type' => 'dir', 'path' => $path];
         }
 
-        $listing = $this->ftpRawlist('-A', $path);
+        $listing = $this->ftpRawlist('-A', str_replace('*', '\\*', $path));
 
         if (empty($listing) || in_array('total 0', $listing, true)) {
             return false;
@@ -496,6 +490,8 @@ class Ftp extends AbstractFtpAdapter
      */
     protected function listDirectoryContents($directory, $recursive = true)
     {
+        $directory = str_replace('*', '\\*', $directory);
+
         if ($recursive && $this->recurseManually) {
             return $this->listDirectoryContentsRecursive($directory);
         }
@@ -564,7 +560,6 @@ class Ftp extends AbstractFtpAdapter
 
         if ($this->isPureFtpd) {
             $path = str_replace(' ', '\ ', $path);
-            $this->escapePath($path);
         }
 
         return ftp_rawlist($connection, $options . ' ' . $path);

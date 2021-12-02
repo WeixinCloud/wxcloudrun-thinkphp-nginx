@@ -408,8 +408,7 @@ class Request implements ArrayAccess
             $rootDomain = $this->rootDomain();
 
             if ($rootDomain) {
-                $sub             = stristr($this->host(), $rootDomain, true);
-                $this->subDomain = $sub ? rtrim($sub, '.') : '';
+                $this->subDomain = rtrim(stristr($this->host(), $rootDomain, true), '.');
             } else {
                 $this->subDomain = '';
             }
@@ -879,12 +878,10 @@ class Request implements ArrayAccess
      */
     public function all($name = '', $filter = '')
     {
-        $data = array_merge($this->param(), $this->file() ?: []);
+        $data = array_merge($this->param(), $this->file());
 
         if (is_array($name)) {
             $data = $this->only($name, $data, $filter);
-        } elseif ($name) {
-            $data = $data[$name] ?? null;
         }
 
         return $data;
@@ -1150,6 +1147,7 @@ class Request implements ArrayAccess
     {
         $files = $this->file;
         if (!empty($files)) {
+
             if (strpos($name, '.')) {
                 [$name, $sub] = explode('.', $name);
             }
@@ -1309,12 +1307,12 @@ class Request implements ArrayAccess
 
     /**
      * 强制类型转换
-     * @access protected
+     * @access public
      * @param  mixed  $data
      * @param  string $type
      * @return mixed
      */
-    protected function typeCast(&$data, string $type)
+    private function typeCast(&$data, string $type)
     {
         switch (strtolower($type)) {
             // 数组
@@ -1346,7 +1344,7 @@ class Request implements ArrayAccess
 
     /**
      * 获取数据
-     * @access protected
+     * @access public
      * @param  array  $data 数据源
      * @param  string $name 字段名
      * @param  mixed  $default 默认值
