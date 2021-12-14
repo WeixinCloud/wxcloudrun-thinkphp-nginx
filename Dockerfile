@@ -20,10 +20,10 @@ WORKDIR /app
 # 将当前目录下所有文件拷贝到/app
 COPY . /app
 
-# 替换nginx配置
-# /app/runtime 权限
+# 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
     && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
+    && cp /app/conf/php.ini /etc/php7/php.ini \
     && mkdir -p /run/nginx \
     && chmod -R 777 /app/runtime \
     && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
