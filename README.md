@@ -21,7 +21,9 @@
 │   ├── model                   模型目录
 │   └── view                    视图目录
 ├── conf                        配置文件
-│   └── nginx.conf              nginx 配置
+│   ├── fpm.conf                fpm 配置
+│   ├── nginx.conf              nginx 配置
+│   └── php.ini                 php 配置
 ├── config                      thinkphp 配置
 ├── container.config.json       微信云托管流水线配置
 ├── public                      WEB目录（对外访问目录）
