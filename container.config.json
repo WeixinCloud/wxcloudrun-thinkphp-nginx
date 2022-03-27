@@ -11,7 +11,7 @@
 	"policyType": "cpu",                            
 	"policyThreshold": 60,                          
 	"envParams": {},                                
-	"customLogs": "stdout",                         
+	"customLogs": "/app/runtime/log/*",                         
 	"dataBaseName":"thinkphp_demo",                 
 	"executeSQLs":[
 		"CREATE DATABASE IF NOT EXISTS thinkphp_demo;",
