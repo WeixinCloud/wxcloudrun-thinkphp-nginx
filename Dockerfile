@@ -26,7 +26,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositorie
 # 设定工作目录
 WORKDIR /app
 
-# 将当前目录下所有文件拷贝到/app
+# 将当前目录下所有文件拷贝到/app （.dockerignore中文件除外）
 COPY . /app
 
 # 替换nginx、fpm、php配置
